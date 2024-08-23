@@ -18,3 +18,15 @@
 - Error Handling
 - Https - supports https and http aswell
 - Different build for DEV and Prod
+
+# Food App Development Design
+
+ - Header
+    - logo
+    - nav-items - Home, About, Cart
+ - Body
+    - Search
+    - cards
+ - Footer
+    - copyright
+    - address
