@@ -72,3 +72,11 @@
   height: 300px;
   background-color: #f0f0f0;
 }
+
+.filter {
+  display: flex;
+}
+
+.filter-btn {
+  margin-left: 20px;
+}
