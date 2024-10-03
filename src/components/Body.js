@@ -5,12 +5,14 @@ import Comments from "./Comments";
 import Shimmer from "./Shimmer";
 
 const Body = () => {
-  const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+  // const [listOfRestaurants, setListOfRestaurants] = useState(resList);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [initialData] = useState(resList);
   const [listOfUsers, setListOfUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
-   updateFilterdData = () => {
-    let filterdData = listOfRestaurants.filter((res) => res.rating > 4.7);
+
+  updateFilterdData = () => {
+    let filterdData = initialData.filter((res) => res.rating > 4.7);
     console.log("filter = ", filterdData);
     setListOfRestaurants(filterdData);
   };
@@ -21,12 +23,15 @@ const Body = () => {
 
   fetchRestaurantsData = async () => {
     const url =
-    "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
     let res = await fetch(url);
     let json = await res.json();
-    console.log("swiggy resp = ", json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
-    // setListOfRestaurants(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
-  }
+    let data =
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+    console.log("swiggy resp = ", data);
+    setListOfRestaurants([...data, ...data]); // show more data
+  };
 
   fetChComments = async () => {
     let res = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -35,8 +40,8 @@ const Body = () => {
   };
 
   useEffect(() => {
-    fetChComments();
-    // fetchRestaurantsData();
+    // fetChComments();
+    fetchRestaurantsData();
   }, []);
 
   searchRestaurants = () => {
@@ -52,7 +57,7 @@ const Body = () => {
   //   return <Shimmer />;
   // }
 
-  return listOfUsers?.length === 0 ? (
+  return listOfRestaurants?.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
@@ -72,12 +77,10 @@ const Body = () => {
       </div>
       <div className="cards-container">
         {listOfRestaurants.map((res) => (
-          <RestaurantCard key={res.id} resData={res} />
+          <RestaurantCard key={res?.info?.id} resData={res.info} />
         ))}
       </div>
-      <div>
-        <Comments userData={listOfUsers}></Comments>
-      </div>
+      <div>{/* <Comments userData={listOfUsers}></Comments> */}</div>
     </div>
   );
 };
