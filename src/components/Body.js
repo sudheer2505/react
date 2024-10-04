@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import resList from "../utils/mockData";
 import RestaurantCard from "./RestaurantCard";
-import Comments from "./Comments";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   // const [listOfRestaurants, setListOfRestaurants] = useState(resList);
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [initialData] = useState(resList);
-  const [listOfUsers, setListOfUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   updateFilterdData = () => {
@@ -30,17 +29,10 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
     console.log("swiggy resp = ", data);
-    setListOfRestaurants([...data, ...data]); // show more data
-  };
-
-  fetChComments = async () => {
-    let res = await fetch("https://jsonplaceholder.typicode.com/users");
-    let json = await res.json();
-    setListOfUsers(json);
+    setListOfRestaurants(data);
   };
 
   useEffect(() => {
-    // fetChComments();
     fetchRestaurantsData();
   }, []);
 
@@ -77,10 +69,11 @@ const Body = () => {
       </div>
       <div className="cards-container">
         {listOfRestaurants.map((res) => (
-          <RestaurantCard key={res?.info?.id} resData={res.info} />
+          <Link key={res?.info?.id} to={"/restaurantInfo/" + res.info.id}>
+            <RestaurantCard resData={res.info} />
+          </Link>
         ))}
       </div>
-      <div>{/* <Comments userData={listOfUsers}></Comments> */}</div>
     </div>
   );
 };

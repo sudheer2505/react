@@ -38,6 +38,12 @@
   flex-wrap: wrap;
   margin-top: 10px;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .card {
   margin: 5px;
   width: 200px;
