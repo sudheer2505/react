@@ -11,7 +11,7 @@ const About = () => {
     <div>
       About page
       <User info={info} />
-      <UserClass info={info}/>
+      {/* <UserClass name={"Sudheer Kumar"} location={"Hyderabad"} /> */}
     </div>
   );
 };
