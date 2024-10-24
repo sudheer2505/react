@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import resList from "../utils/mockData";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { TopRatedRestaurant } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { GET_SWIGGY_DATA } from "../utils/constants";
 
 const Body = () => {
   // const [listOfRestaurants, setListOfRestaurants] = useState(resList);
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
-  const [initialData] = useState(resList);
+  const [initialData, setInitialData] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   const onlineStatus = useOnlineStatus();
 
   updateFilterdData = () => {
-    let filterdData = initialData.filter((res) => res.rating > 4.7);
+    let filterdData = initialData.filter((res) => res.info.avgRating >= 4.4);
     console.log("filter = ", filterdData);
     setListOfRestaurants(filterdData);
   };
@@ -24,14 +25,13 @@ const Body = () => {
   };
 
   fetchRestaurantsData = async () => {
-    const url =
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
-    let res = await fetch(url);
+    let res = await fetch(GET_SWIGGY_DATA);
     let json = await res.json();
     let data =
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
     console.log("swiggy resp = ", data);
+    setInitialData(data);
     setListOfRestaurants(data);
   };
 
@@ -41,11 +41,13 @@ const Body = () => {
 
   searchRestaurants = () => {
     const filterdRest = initialData.filter((res) =>
-      res.name.toLowerCase().includes(searchText.toLowerCase())
+      res.info.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
     setListOfRestaurants(filterdRest);
   };
+
+  const RestaurantCardTopRated = TopRatedRestaurant(RestaurantCard);
 
   // conditional rendering
   // if (listOfUsers?.length === 0) {
@@ -60,24 +62,42 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
+      <div className="flex flex-row ml-3">
         <div className="search">
           <input
             type="text"
+            className="border border-solid border-gray-200"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button onClick={searchRestaurants}>Search</button>
+          <button
+            className="search px-2 py-1 my-2 ml-1 font-thin rounded-md bg-blue-700 text-white"
+            onClick={searchRestaurants}
+          >
+            Search
+          </button>
         </div>
-        <button className="filter-btn" onClick={updateFilterdData}>
+        <button
+          className="px-2 py-1 my-2 ml-2 font-thin rounded-md bg-gray-400 text-white"
+          onClick={updateFilterdData}
+        >
           Top Rated Restaurant
         </button>
-        <button onClick={resetData}>Reset</button>
+        <button
+          className="px-2 py-1 my-2 ml-2 font-thin rounded-md bg-orange-400 text-white"
+          onClick={resetData}
+        >
+          Reset
+        </button>
       </div>
-      <div className="cards-container">
+      <div className="flex flex-wrap my-3">
         {listOfRestaurants.map((res) => (
           <Link key={res?.info?.id} to={"/restaurantInfo/" + res.info.id}>
-            <RestaurantCard resData={res.info} />
+            {res.info.avgRating >= 4.4 ? (
+              <RestaurantCardTopRated resData={res.info} />
+            ) : (
+              <RestaurantCard resData={res.info} />
+            )}
           </Link>
         ))}
       </div>
