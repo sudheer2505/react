@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import resList from "../utils/mockData";
 import RestaurantCard, { TopRatedRestaurant } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import { GET_SWIGGY_DATA } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   // const [listOfRestaurants, setListOfRestaurants] = useState(resList);
@@ -13,6 +14,8 @@ const Body = () => {
   const [searchText, setSearchText] = useState("");
 
   const onlineStatus = useOnlineStatus();
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   updateFilterdData = () => {
     let filterdData = initialData.filter((res) => res.info.avgRating >= 4.4);
@@ -49,6 +52,7 @@ const Body = () => {
 
   const RestaurantCardTopRated = TopRatedRestaurant(RestaurantCard);
 
+  console.log("bodyy = ", loggedInUser);
   // conditional rendering
   // if (listOfUsers?.length === 0) {
   //   return <Shimmer />;
@@ -89,6 +93,15 @@ const Body = () => {
         >
           Reset
         </button>
+        <div className="pl-2">
+          <label>User Name : </label>
+          <input
+            type="text"
+            className="border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
       </div>
       <div className="flex flex-wrap my-3">
         {listOfRestaurants.map((res) => (

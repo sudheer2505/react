@@ -1,4 +1,8 @@
+import UserContext from "../utils/UserContext";
+import { useContext } from "react";
 const ItemCards = ({ data }) => {
+  const res = useContext(UserContext);
+  console.log("context data = ", res, UserContext);
   console.log("props = ", data);
   const cards = data;
   const imgUrl =
@@ -24,7 +28,9 @@ const ItemCards = ({ data }) => {
           </div>
           <div className="w-3/12 p-3 relative">
             <div className="absolute top-24 left-12">
-              <button className="bg-white rounded-md p-2 border-1">Add +</button>
+              <button className="bg-black text-white rounded-md p-2 border-1">
+                Add +
+              </button>
             </div>
             <img
               className="w-full h-[100px]"

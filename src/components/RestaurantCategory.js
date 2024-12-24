@@ -1,11 +1,10 @@
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 import ItemCards from "./ItemCards";
-import { useState } from "react";
 
-const RestaurantCategory = ({ data }) => {
-  const [showDiv, setShowDiv] = useState(false);
-
+const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
   const handleClick = () => {
-    setShowDiv(!showDiv);
+    setShowIndex(null);
   };
 
   return (
@@ -20,7 +19,7 @@ const RestaurantCategory = ({ data }) => {
         <span className="">🔽</span>
       </div>
 
-      {showDiv && <ItemCards data={data.itemCards} />}
+      {showItems && <ItemCards data={data.itemCards} />}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import UserContext from "../utils/UserContext";
 class UserClass extends React.Component {
   constructor(props) {
     super(props);
@@ -27,16 +28,21 @@ class UserClass extends React.Component {
   }
 
   render() {
-    console.log("child render");
+    console.log("child render", UserContext);
     // const { name, location } = this.props;
     const { name, location } = this.state.userInfo;
     return (
-      <div className="user-card">
-        <h3>Class Component</h3>
-        ================
-        <h2>Name: {name}</h2>
-        <h3> Location: {location}</h3>
-      </div>
+      <>
+        <div className="user-card">
+          <h3>Class Component</h3>
+          ================
+          <h2>Name: {name}</h2>
+          <h3> Location: {location}</h3>
+          <UserContext.Consumer>
+            {(data) => console.log(data)}
+          </UserContext.Consumer>
+        </div>
+      </>
     );
   }
 }
