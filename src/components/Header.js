@@ -22,14 +22,12 @@ const Header = () => {
         <li className="p-4"><Link to="/">Home </Link></li>
         <li className="p-4"><Link to="/about">About </Link></li>
         <li className="p-4"><Link to="/contact">Contact</Link></li>
-        <li className="p-4 font-bold">Cart ({cartItems?.length} items)</li>
+        <li className="p-4 font-bold"> <Link to="/cart">Cart ({cartItems?.length} items)</Link></li>
         <li className="p-4">
           <button className="px-3 py-1 font-thin rounded-md bg-blue-700 text-white"
             onClick={() => {
               btnName == "Login" ? setBtnName("Logout") : setBtnName("Login");
-            }}
-          >
-            {btnName}
+            }}> {btnName}
           </button>
         </li>
         <li className="p-4 font-bold">{loggedInUser}</li>
