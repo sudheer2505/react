@@ -30,3 +30,12 @@
  - Footer
     - copyright
     - address
+
+
+ - Redux
+   - install react-redux and @reactjs/toolkit
+   - build store
+   - configure store
+   - create slice/part of store
+   - dispact an action
+   - selector - subscribe to store

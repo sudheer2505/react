@@ -1,5 +1,7 @@
+import { useDispatch } from "react-redux";
 import UserContext from "../utils/UserContext";
 import { useContext } from "react";
+import { addItem } from "../store/cartSlice";
 const ItemCards = ({ data }) => {
   const res = useContext(UserContext);
   console.log("context data = ", res, UserContext);
@@ -7,6 +9,13 @@ const ItemCards = ({ data }) => {
   const cards = data;
   const imgUrl =
     "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
+
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
+
   return (
     <div className="p-5">
       {cards.map((item) => (
@@ -28,7 +37,10 @@ const ItemCards = ({ data }) => {
           </div>
           <div className="w-3/12 p-3 relative">
             <div className="absolute top-24 left-12">
-              <button className="bg-black text-white rounded-md p-2 border-1">
+              <button
+                className="bg-black text-white rounded-md p-2 border-1"
+                onClick={() => handleAddItem(item)}
+              >
                 Add +
               </button>
             </div>
