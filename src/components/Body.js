@@ -4,7 +4,7 @@ import RestaurantCard, { TopRatedRestaurant } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import { GET_SWIGGY_DATA } from "../utils/constants";
+import { GET_SWIGGY_DATA, SWIGGY_DATA } from "../utils/constants";
 import UserContext from "../utils/UserContext";
 
 const Body = () => {
@@ -30,6 +30,7 @@ const Body = () => {
   fetchRestaurantsData = async () => {
     let res = await fetch(GET_SWIGGY_DATA);
     let json = await res.json();
+    // let json = SWIGGY_DATA;
     let data =
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
