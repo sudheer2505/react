@@ -15,7 +15,7 @@ const RestaurantCard = (props) => {
   const imgUrl =
     "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/";
   return (
-    <div
+    <div data-testid="resCard"
       className={
         isOpen
           ? "rounded-md m-2 p-2 pb-4 w-[250px] h-auto bg-gray-100 hover:bg-gray-300"

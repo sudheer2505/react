@@ -71,6 +71,7 @@ const Body = () => {
         <div className="search">
           <input
             type="text"
+            placeholder="Search"
             className="border border-solid border-gray-200"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -86,7 +87,7 @@ const Body = () => {
           className="px-2 py-1 my-2 ml-2 font-thin rounded-md bg-gray-400 text-white"
           onClick={updateFilterdData}
         >
-          Top Rated Restaurant
+          Top Rated Restaurants
         </button>
         <button
           className="px-2 py-1 my-2 ml-2 font-thin rounded-md bg-orange-400 text-white"
